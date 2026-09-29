@@ -1,8 +1,5 @@
 import socket
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from config import UDP_PORT
+from src.config import UDP_PORT
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind(("0.0.0.0", UDP_PORT))

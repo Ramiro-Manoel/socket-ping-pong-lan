@@ -1,9 +1,7 @@
 import socket
 import sys
-import os
 import time
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from config import UDP_PORT, REPETITIONS, SIZES
+from src.config import UDP_PORT, REPETITIONS, SIZES
 
 UDP_SIZES = [s for s in SIZES if s <= 65535]
 

@@ -1,18 +1,13 @@
 import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src", "client"))
-from config import TCP_PORT, UDP_PORT, SIZES
-
-import tcp
-import udp
-import plot
+from src.config import TCP_PORT, UDP_PORT
+from src.client import tcp, udp
+from src import plot
 
 server_ip = sys.argv[1]
 
 try:
     tcp_results = tcp.main(server_ip)
-except ConnectionRefusedError:
+except (ConnectionRefusedError, TimeoutError):
     print(f"Error: could not connect to TCP server at {server_ip}:{TCP_PORT}")
     print("Make sure src/server/tcp.py is running on the remote machine.")
     sys.exit(1)
@@ -24,13 +19,16 @@ except OSError:
     print("Make sure src/server/udp.py is running on the remote machine.")
     sys.exit(1)
 
+
 def _bw(size, rtt_ms):
     return (size / 1e6) / (rtt_ms / 1000)
+
 
 def _fmt(size):
     if size >= 1_000_000: return f"{size // 1_000_000}MB"
     if size >= 1_000:     return f"{size // 1_000}KB"
     return f"{size}B"
+
 
 udp_map = {size: rtt for size, rtt in udp_results}
 

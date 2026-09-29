@@ -1,11 +1,9 @@
 import socket
 import struct
 import sys
-import os
 import time
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from config import TCP_PORT, REPETITIONS, SIZES
-from utils import recv_all
+from src.config import TCP_PORT, REPETITIONS, SIZES
+from src.utils import recv_all
 
 
 def run(server_ip, size):
